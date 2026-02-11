@@ -1,0 +1,10 @@
+# PyCharm and Python junk
+.idea/
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Earth Engine temp files
+.python-hosts
