@@ -1,12 +1,12 @@
 import streamlit as st
 import ee
 import leafmap.foliumap as leafmap
-import os
 from folium.plugins import MousePosition
 from branca.element import MacroElement
 from jinja2 import Template
+from analysis import show_grid_analysis # Import your function
 
-# 1. Hide the default navigation sidebar list
+# Hide the default navigation sidebar list
 st.markdown("""
     <style>
         [data-testid="stSidebarNav"] {
@@ -15,7 +15,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- CUSTOM SIDEBAR NAVIGATION ---
+# CUSTOM SIDEBAR
 st.sidebar.title("🚀 Navigation")
 
 # This creates a clean link to your main.py file
@@ -27,7 +27,7 @@ st.sidebar.header("Data Layers")
 show_ndvi = st.sidebar.checkbox("Show NDVI Change (2020-2025)", value=True)
 show_lst = st.sidebar.checkbox("Show LST (2025)", value=False)
 
-# 2. Initialize Earth Engine
+# Initialize Earth Engine
 if 'ee_initialized' not in st.session_state:
     try:
         ee.Initialize(project='ai-urban-heat-index')
@@ -95,7 +95,7 @@ with tab1:
         temp_celsius = temp_kelvin.subtract(273.15).rename(f'LST_{year}')
         return temp_celsius
 
-    # 3. Setup Map
+    # Setup Map
     m = leafmap.Map(center=[7.0707, 125.6087], zoom=14)
     m.add_basemap("HYBRID")
 
@@ -109,7 +109,7 @@ with tab1:
         lng_formatter=formatter,
     ).add_to(m)
 
-    # 4. Define Legend
+    # Define Legend
     # NDVI Visuals
     legend_dict = {
         'Vegetation Loss (Urbanization)': '#FF0000',
@@ -122,7 +122,7 @@ with tab1:
     lst_vis = {"min": 25, "max": 45, "palette": ['blue', 'yellow', 'red']}
 
 
-    # 5. Load the Layers
+    # Load the Layers
     try:
         if show_ndvi:
             ndvi_2020 = get_ndvi_roaming(2020)
@@ -155,43 +155,4 @@ with tab1:
 
 # --- TAB 2: Comparison Analysis ---
 with tab2:
-    st.header("📂 Analysis File Manager")
-    st.info("Select the historical imagery from your 'images' folder to begin classification.")
-
-    # 1. Define the path to your images folder
-    # Relative path from your map.py location
-    img_folder = "images"
-
-    # 2. Mimic the Google Drive UI
-    available_years = ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]
-
-    col_ui1, col_ui2 = st.columns(2)
-
-    with col_ui1:
-        st.write("📁 **Select Baseline Year**")
-        baseline_year = st.selectbox("My Drive / ai_project_2026 / images /", available_years, index=2)  # Default 2020
-
-    with col_ui2:
-        st.write("📁 **Select Comparison Year**")
-        current_year = st.selectbox("My Drive / ai_project_2026 / images /", available_years, index=7)  # Default 2025
-
-    # 3. Execution Logic
-    if st.button("🚀 Run Grid Classification Analysis"):
-        # Construct full paths
-        baseline_path = os.path.join(img_folder, f"{baseline_year}.png")
-        current_path = os.path.join(img_folder, f"{current_year}.png")
-
-        # 4. Display results using your Grid-Zone logic
-        res_col1, res_col2 = st.columns(2)
-
-        if os.path.exists(baseline_path) and os.path.exists(current_path):
-            with res_col1:
-                st.subheader(f"Baseline: {baseline_year}")
-                st.image(baseline_path, use_container_width=True)
-            with res_col2:
-                st.subheader(f"Current: {current_year}")
-                st.image(current_path, use_container_width=True)
-
-            st.success(f"Texture analysis comparison complete for {baseline_year} vs {current_year}.")
-        else:
-            st.error(f"Missing file! Ensure 'images/{baseline_year}.png' is pushed to GitHub.")
+    show_grid_analysis()
