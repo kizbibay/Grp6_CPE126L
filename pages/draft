@@ -1,0 +1,35 @@
+import streamlit as st
+import ee
+import leafmap.leafmap as leafmap
+
+# Initialize Streamlit app
+st.set_page_config(layout="wide")
+st.title("Davao City: Urban Green Space (2020-2025)")
+
+# Initialize Earth Engine
+try:
+    ee.Initialize(project='ai-urban-heat-index')
+except Exception as e:
+    st.error(f"Authentication error: {e}")
+    st.stop()
+
+# Create a Leafmap Map
+m = leafmap.Map(center=[7.0707, 125.6087], zoom=12)
+m.add_basemap("SATELLITE")
+
+# Define the time range
+years = list(range(2020, 2026))
+layers = {f"Vegetation {year}": f"COPERNICUS/S2_SR_HARMONIZED/{year}" for year in years}
+labels = [str(year) for year in years]
+
+# Add the time slider
+m.add_time_slider(
+    layers=layers,
+    vis_params={"bands": ["B4", "B3", "B2"], "min": 0, "max": 3000},
+    labels=labels,
+    date_format="YYYY",
+    time_interval=1
+)
+
+# Render the Leafmap in Streamlit
+st.components.v1.html(m.to_html(), height=600)
