@@ -19,7 +19,7 @@ st.markdown("""
 st.sidebar.title("🚀 Navigation")
 
 # This creates a clean link to your main.py file
-st.sidebar.page_link("pages/main.py", label="Home", icon="🏠")
+st.sidebar.page_link("main.py", label="Home", icon="🏠")
 st.sidebar.write("---")
 
 st.sidebar.header("Data Layers")

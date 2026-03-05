@@ -13,7 +13,7 @@ st.markdown("""
 st.sidebar.title("🚀 Navigation")
 
 # This creates a clean link to your map.py file
-st.sidebar.page_link("map.py", label="Interactive Map", icon="🌐")
+st.sidebar.page_link("pages/map.py", label="Interactive Map", icon="🌐")
 
 st.sidebar.write("---")
 
