@@ -92,7 +92,7 @@ def process_analysis(img, grid_size):
             # vegetation index
             exg = vegetation_index(patch)
 
-            veg_mask = exg > np.mean(exg)
+            veg_mask = exg > 20
 
             green_percent = np.sum(veg_mask) / veg_mask.size * 100
 

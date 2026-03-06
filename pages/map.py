@@ -68,18 +68,6 @@ class BindLegend(MacroElement):
 
 with tab1:
 
-    # --- TOP-POSITIONED VERIFICATION LINKS ---
-    col_link1, col_link2 = st.columns(2)
-    with col_link1:
-        st.link_button("🕒 Google Earth Historical Imagery",
-                       "https://earth.google.com/web/@7.0707,125.6087,500a,35y,0h,0t,0r")
-    with col_link2:
-        st.link_button("🗺️ Official Davao Zoning Map",
-                       "https://map.davaocity.gov.ph/zoning/")
-
-    st.write("---")
-
-
     # --- NDVI ---
     def get_ndvi_roaming(year):
         collection = (ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
