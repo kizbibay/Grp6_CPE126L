@@ -122,49 +122,55 @@ else:
         current_user = st.session_state.get('user', 'Guest')
 
         st.markdown("""
-                <style>
-                    .sidebar-spacer {
-                        margin-top: auto;
-                    }
-                    .footer-container {
-                        position: fixed;
-                        bottom: 80px; 
-                        width: 260px;
-                        padding: 10px;
-                        border-top: 1px solid #E6E6E6;
-                        background: white;
-                    }
-                    .logout-container {
-                        position: fixed;
-                        bottom: 20px;
-                        width: 260px;
-                        padding: 0 10px;
-                    }
-                </style>
-            """, unsafe_allow_html=True)
+            <style>
+                .footer-container {
+                    position: fixed;
+                    bottom: 20px; 
+                    width: 260px;
+                    padding: 10px;
+                    border-top: 1px solid #E6E6E6;
+                    background: white;
+                }
+                .user-profile {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 10px;
+                }
+                .user-avatar {
+                    width: 35px;
+                    height: 35px;
+                    background: #4CAF50;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: bold;
+                }
+                .logout-btn {
+                    width: 100%;
+                }
+            </style>
+        """, unsafe_allow_html=True)
 
-        # User Profile Info
+        # User Profile + Logout Button
         st.markdown(f"""
-                <div class="footer-container">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <div style="width: 35px; height: 35px; background: #4CAF50; border-radius: 50%; 
-                                    display: flex; align-items: center; justify-content: center; 
-                                    color: white; font-weight: bold;">
-                            {current_user[0].upper()}
-                        </div>
-                        <div>
-                            <p style="margin:0; font-size:13px; font-weight:600; color:#31333F;">{current_user}</p>
-                        </div>
+            <div class="footer-container">
+                <div class="user-profile">
+                    <div class="user-avatar">{current_user[0].upper()}</div>
+                    <div>
+                        <p style="margin:0; font-size:13px; font-weight:600; color:#31333F;">{current_user}</p>
                     </div>
                 </div>
-            """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
-        # Logout Button positioned at the very bottom
-        st.markdown('<div class="logout-container">', unsafe_allow_html=True)
-        if st.button(f"Logout", key="logout_btn", use_container_width=True):
+        # Logout Button
+        if st.button("Logout", key="logout_btn", use_container_width=True):
             st.session_state['logged_in'] = False
             st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
+
+        st.markdown("</div>", unsafe_allow_html=True)
 
     # --- MAIN PAGE CONTENT ---
     st.title("Davao City: Urban Green Space Insights")
@@ -172,8 +178,6 @@ else:
 
     # --- 3. HIGH-LEVEL METRICS ---
     st.write("")
-    col1, col2, col3 = st.columns(3)
-
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric(label="Vegetation Loss", value=f"{veg_delta}%", delta="Live Analysis", delta_color="inverse")
