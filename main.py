@@ -55,7 +55,7 @@ with st.sidebar:
     # --- NAVIGATION ITEMS ---
     # Using icons and labels
     st.page_link("main.py", label="Dashboard", icon="📊")
-    st.page_link("pages/map.py", label="Location Overview", icon="📍")
+    st.page_link("pages/map.py", label="Interactive Map", icon="📍")
     st.write("---")
 
     # --- TEAM / SETTINGS SECTION ---

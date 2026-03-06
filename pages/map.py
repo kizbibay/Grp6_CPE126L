@@ -4,7 +4,14 @@ import leafmap.foliumap as leafmap
 from folium.plugins import MousePosition
 from branca.element import MacroElement
 from jinja2 import Template
-from analysis import show_grid_analysis # Import your function
+
+
+st.set_page_config(layout="wide")
+
+try:
+    from pages.analysis import show_grid_analysis
+except ImportError:
+    from analysis import show_grid_analysis
 
 # Hide the default navigation sidebar list
 st.markdown("""
@@ -27,6 +34,7 @@ st.sidebar.header("Data Layers")
 show_ndvi = st.sidebar.checkbox("Show NDVI Change (2020-2025)", value=True)
 show_lst = st.sidebar.checkbox("Show LST (2025)", value=False)
 
+
 # Initialize Earth Engine
 if 'ee_initialized' not in st.session_state:
     try:
@@ -35,7 +43,6 @@ if 'ee_initialized' not in st.session_state:
     except Exception as e:
         st.error(f"Earth Engine Auth Error: {e}")
 
-st.set_page_config(layout="wide")
 st.title("Davao City: Urban Green Space Monitoring")
 
 tab1, tab2 = st.tabs(["🌐 Interactive Map", "📊 Comparison Analysis"])
