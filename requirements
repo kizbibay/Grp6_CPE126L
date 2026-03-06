@@ -2,4 +2,9 @@ streamlit
 earthengine-api
 leafmap
 folium
-streamlit-folium
+branca
+jinja2
+pandas
+plotly
+numpy
+opencv-python-headless
