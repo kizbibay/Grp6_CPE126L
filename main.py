@@ -18,13 +18,8 @@ if not st.session_state['logged_in']:
     login_signup_ui()
 else:
     # --- YOUR DASHBOARD CONTENT ---
-    # Show the sidebar and your metrics here
-    st.sidebar.success(f"Logged in as {st.session_state['user']}")
-    if st.sidebar.button("Logout"):
-        st.session_state['logged_in'] = False
-        st.rerun()
 
-    # --- 1. MODERN SIDEBAR CSS (UNTOUCHED) ---
+    # --- 1. MODERN SIDEBAR CSS ---
     st.markdown("""
         <style>
             [data-testid="stSidebarNav"] {display: none;}
@@ -118,25 +113,58 @@ else:
             '<div class="sidebar-brand">🌿 GreenLens <span style="font-size:10px; background:#F0F2F6; padding:2px 6px; border-radius:4px; color:#666;">PRO</span></div>',
             unsafe_allow_html=True)
         st.write("")
+
+        # Navigation Links
         st.page_link("main.py", label="Dashboard", icon="📊")
         st.page_link("pages/map.py", label="Interactive Map", icon="📍")
-        st.write("---")
-        st.page_link("main.py", label="Support", icon="❓")
-        st.page_link("main.py", label="Settings", icon="⚙️")
+
+        # --- SIDEBAR FOOTER ---
+        current_user = st.session_state.get('user', 'Guest')
 
         st.markdown("""
-            <div class="sidebar-footer">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 35px; height: 35px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
-                        K
-                    </div>
-                    <div>
-                        <p style="margin:0; font-size:13px; font-weight:600; color:#31333F;">Kiziahlyn Fiona</p>
-                        <p style="margin:0; font-size:11px; color:#666;">Group 6 Lead</p>
+                <style>
+                    .sidebar-spacer {
+                        margin-top: auto;
+                    }
+                    .footer-container {
+                        position: fixed;
+                        bottom: 80px; 
+                        width: 260px;
+                        padding: 10px;
+                        border-top: 1px solid #E6E6E6;
+                        background: white;
+                    }
+                    .logout-container {
+                        position: fixed;
+                        bottom: 20px;
+                        width: 260px;
+                        padding: 0 10px;
+                    }
+                </style>
+            """, unsafe_allow_html=True)
+
+        # User Profile Info
+        st.markdown(f"""
+                <div class="footer-container">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 35px; height: 35px; background: #4CAF50; border-radius: 50%; 
+                                    display: flex; align-items: center; justify-content: center; 
+                                    color: white; font-weight: bold;">
+                            {current_user[0].upper()}
+                        </div>
+                        <div>
+                            <p style="margin:0; font-size:13px; font-weight:600; color:#31333F;">{current_user}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
+
+        # Logout Button positioned at the very bottom
+        st.markdown('<div class="logout-container">', unsafe_allow_html=True)
+        if st.button(f"Logout", key="logout_btn", use_container_width=True):
+            st.session_state['logged_in'] = False
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
 
     # --- MAIN PAGE CONTENT ---
     st.title("Davao City: Urban Green Space Insights")
