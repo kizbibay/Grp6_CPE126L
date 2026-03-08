@@ -1,7 +1,7 @@
 import streamlit as st
 import ee
 from datetime import datetime
-from login import login_signup_ui
+from login import account
 
 # --- INITIALIZE SESSION STATE ---
 if 'logged_in' not in st.session_state:
@@ -20,8 +20,8 @@ if not st.session_state['logged_in']:
         """, unsafe_allow_html=True)
 
     placeholder = st.empty()
-    # Call the centered UI
-    login_signup_ui()
+    # Call login.py
+    account()
 else:
     # --- YOUR DASHBOARD CONTENT ---
 

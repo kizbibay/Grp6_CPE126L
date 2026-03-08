@@ -35,7 +35,7 @@ def verify_user(username, password):
     return False
 
 
-def login_signup_ui():
+def account():
     # Creating a centered layout
     _, col2, _ = st.columns([1, 2, 1])
 
