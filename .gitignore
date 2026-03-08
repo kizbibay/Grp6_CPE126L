@@ -8,3 +8,4 @@ venv/
 
 # Earth Engine temp files
 .python-hosts
+/users.json

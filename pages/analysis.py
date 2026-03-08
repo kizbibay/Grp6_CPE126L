@@ -177,7 +177,7 @@ def calculate_trend(grid_size):
 
 def show_grid_analysis():
 
-    st.title("Urban Vegetation & Urbanization Analysis")
+    st.title("Urban Green Space Analysis System")
 
     available_years=[str(y) for y in range(2020,2026)]
 
@@ -321,7 +321,7 @@ def show_grid_analysis():
                     template="plotly_dark"
                 )
 
-                st.plotly_chart(fig,use_container_width=True)
+                st.plotly_chart(fig,width='stretch')
 
         # MULTI YEAR TREND
 
@@ -339,4 +339,4 @@ def show_grid_analysis():
                 template="plotly_dark"
             )
 
-            st.plotly_chart(fig,use_container_width=True)
+            st.plotly_chart(fig,width='stretch')

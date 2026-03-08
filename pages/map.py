@@ -13,16 +13,32 @@ try:
 except ImportError:
     from analysis import show_grid_analysis
 
-# Hide the default navigation sidebar list
 st.markdown("""
     <style>
-        [data-testid="stSidebarNav"] {
-            display: none;
-        }
+        [data-testid="stSidebarNav"] {display: none;}
+            section[data-testid="stSidebar"] {
+                background-color: #F6F6E9 !important;
+                border-right: 1px solid #E6E6E6;
+                padding-top: 20px;
+            }
+            /* Target all headers (h1, h2, h3) inside the sidebar specifically */
+            [data-testid="stSidebar"] h1, 
+            [data-testid="stSidebar"] h2, 
+            [data-testid="stSidebar"] h3 {
+            color: #000000 !important;
+            }
+
+            /* Target general text and checkbox labels to ensure they are visible */
+            [data-testid="stSidebar"] p,
+            [data-testid="stSidebar"] label {
+            color: #000000 !important;
+            font-weight: 500 !important;
+            }
     </style>
 """, unsafe_allow_html=True)
 
 # CUSTOM SIDEBAR
+
 st.sidebar.title("🚀 Navigation")
 
 # This creates a clean link to your main.py file

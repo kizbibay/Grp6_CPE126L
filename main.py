@@ -9,11 +9,17 @@ if 'logged_in' not in st.session_state:
 
 # --- AUTHENTICATION CHECK ---
 if not st.session_state['logged_in']:
-    st.set_page_config(page_title="GreenLens PRO Login", layout="wide")
 
     # Hide sidebar navigation until logged in
-    st.markdown("<style>[data-testid='stSidebarNav'] {display: none;}</style>", unsafe_allow_html=True)
+    st.markdown("""
+            <style>
+                [data-testid="stSidebar"], [data-testid="stSidebarNav"] {
+                    display: none;
+                }
+            </style>
+        """, unsafe_allow_html=True)
 
+    placeholder = st.empty()
     # Call the centered UI
     login_signup_ui()
 else:
@@ -24,7 +30,7 @@ else:
         <style>
             [data-testid="stSidebarNav"] {display: none;}
             section[data-testid="stSidebar"] {
-                background-color: #FFFFFF !important;
+                background-color: #F6F6E9 !important;
                 border-right: 1px solid #E6E6E6;
                 padding-top: 20px;
             }
@@ -46,7 +52,7 @@ else:
                 position: fixed;
                 bottom: 20px;
                 width: 260px;
-                padding: 10px;
+                padding: 20px;
                 border-top: 1px solid #E6E6E6;
                 background: white;
             }
@@ -109,10 +115,9 @@ else:
 
     # --- 2. CUSTOM SIDEBAR CONTENT ---
     with st.sidebar:
-        st.markdown(
-            '<div class="sidebar-brand">🌿 GreenLens <span style="font-size:10px; background:#F0F2F6; padding:2px 6px; border-radius:4px; color:#666;">PRO</span></div>',
-            unsafe_allow_html=True)
-        st.write("")
+        st.image("logo.png", use_container_width=True)
+
+        st.divider()
 
         # Navigation Links
         st.page_link("main.py", label="Dashboard", icon="📊")
@@ -129,7 +134,7 @@ else:
                     width: 260px;
                     padding: 10px;
                     border-top: 1px solid #E6E6E6;
-                    background: white;
+                    background: F6F6E9;
                 }
                 .user-profile {
                     display: flex;
@@ -148,13 +153,26 @@ else:
                     color: white;
                     font-weight: bold;
                 }
-                .logout-btn {
-                    width: 100%;
+                /* Logout button container */
+                div.stButton > button {
+                width: 100% !important;
+                background-color: #4B7E5D !important; /* Your GreenLens Green */
+                color: white !important;
+                border-radius: 8px !important;
+                border: none !important;
+                padding: 0.5rem !important;
+                transition: background-color 0.3s ease;
+                }
+
+                /* Hover effect to make it feel interactive */
+                div.stButton > button:hover {
+                background-color: #3e6a4e !important; /* Slightly darker green on hover */
+                color: white !important;
                 }
             </style>
         """, unsafe_allow_html=True)
 
-        # User Profile + Logout Button
+        # User Profile
         st.markdown(f"""
             <div class="footer-container">
                 <div class="user-profile">
@@ -166,7 +184,7 @@ else:
         """, unsafe_allow_html=True)
 
         # Logout Button
-        if st.button("Logout", key="logout_btn", use_container_width=True):
+        if st.button("Logout", key="logout_btn", width='stretch'):
             st.session_state['logged_in'] = False
             st.rerun()
 
