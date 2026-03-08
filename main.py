@@ -119,7 +119,7 @@ else:
 
         st.divider()
 
-        # Navigation Links
+        # Page Links
         st.page_link("main.py", label="Dashboard", icon="📊")
         st.page_link("pages/map.py", label="Interactive Map", icon="📍")
 
@@ -134,7 +134,7 @@ else:
                     width: 260px;
                     padding: 10px;
                     border-top: 1px solid #E6E6E6;
-                    background: F6F6E9;
+                    background: #F6F6E9;
                 }
                 .user-profile {
                     display: flex;
@@ -145,7 +145,7 @@ else:
                 .user-avatar {
                     width: 35px;
                     height: 35px;
-                    background: #4CAF50;
+                    background: #4B7E5D;
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
@@ -156,7 +156,7 @@ else:
                 /* Logout button container */
                 div.stButton > button {
                 width: 100% !important;
-                background-color: #4B7E5D !important; /* Your GreenLens Green */
+                background-color: #4B7E5D !important; 
                 color: white !important;
                 border-radius: 8px !important;
                 border: none !important;
@@ -178,7 +178,7 @@ else:
                 <div class="user-profile">
                     <div class="user-avatar">{current_user[0].upper()}</div>
                     <div>
-                        <p style="margin:0; font-size:13px; font-weight:600; color:#31333F;">{current_user}</p>
+                        <p style="margin:0; font-size:18px; font-weight:600; color:#31333F;">{current_user}</p>
                     </div>
                 </div>
         """, unsafe_allow_html=True)
