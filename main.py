@@ -69,7 +69,7 @@ else:
             st.error(f"Error: {e}")
 
 
-    @st.cache_data(ttl=86400)  # Cache for 24 hours
+    @st.cache_data(ttl=86400, show_spinner=False)  # Cache for 24 hours
     def fetch_realtime_stats():
         # Davao City Boundary
         davao_roi = ee.Geometry.Point([125.6087, 7.0707]).buffer(15000).bounds()
@@ -108,10 +108,20 @@ else:
 
 
     # Fetch stats
-    try:
-        veg_delta, max_temp = fetch_realtime_stats()
-    except:
-        veg_delta, max_temp = -11.2, 42.6  # Fallback to your research values
+    with st.status("🔄 Syncing with Earth Engine...", expanded=True) as status:
+        st.write("🛰️ Requesting Sentinel-2 & Landsat 8 Imagery for Davao City...")
+        try:
+            # Execute the cached function
+            veg_delta, max_temp = fetch_realtime_stats()
+
+            st.write("🌳 Calculating NDVI Change (2020-2026)...")
+            st.write("🔥 Analyzing Land Surface Temperature (LST)...")
+
+            status.update(label="✅ Environmental Data Synced!", state="complete", expanded=False)
+        except Exception as e:
+            # Fallback to research values for Davao City project if API fails
+            veg_delta, max_temp = -11.2, 42.6
+            status.update(label="⚠️ Connection Timeout: Using Cached Research Data", state="error", expanded=False)
 
     # --- 2. CUSTOM SIDEBAR CONTENT ---
     with st.sidebar:
